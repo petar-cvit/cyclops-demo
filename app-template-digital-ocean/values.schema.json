@@ -137,7 +137,7 @@
         }
       },
       "order": [
-        "databaseType",
+        "engineType",
         "instance",
         "database"
       ]
