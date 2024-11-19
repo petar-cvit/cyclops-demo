@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "environment": {
+      "title": "Environment",
+      "description": "Environment you want to use the instance in",
+      "type": "string",
+      "enum": [
+        "qa",
+        "staging",
+        "production"
+      ],
+      "immutable": true
+    },
+    "region": {
+      "title": "Region",
+      "description": "Region to deploy your MySQL cluster",
+      "type": "string",
+      "enum": [
+        "fra1",
+        "nyc1",
+        "syd1"
+      ],
+      "immutable": true
+    },
+    "size": {
+      "title": "Instance size",
+      "description": "CPU and memory requirements",
+      "type": "string",
+      "enum": [
+        "small",
+        "medium",
+        "large"
+      ],
+      "immutable": true
+    }
+  },
+  "required": [
+    "environment",
+    "size",
+    "region"
+  ],
+  "order": [
+    "environment",
+    "size",
+    "region"
+  ],
+  "type": "object"
+}

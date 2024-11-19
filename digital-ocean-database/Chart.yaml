@@ -1,0 +1,4 @@
+apiVersion: v1
+name: digital-ocean-managed-mysql
+version: 0.0.0
+icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png

@@ -1,0 +1,18 @@
+name: my-app
+
+general:
+  image: nginx
+  version: 1.14.2
+
+scaling:
+  replicas: 1
+
+networking:
+  expose: true
+  port: 80
+  type: ClusterIP
+
+databaseConnection:
+  engineType: PostgreSQL
+  instance: ajmooo
+  database: defaultdb

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+  labels:
+    app: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+spec:
+  replicas: {{ (.Values.scaling).replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+          image: "{{ .Values.general.image }}:{{ .Values.general.version }}"
+          {{- if ((.Values.networking).expose) }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.networking.port | default 80 }}
+              protocol: TCP
+          {{- end }}
+          env:
+          {{- if ((.Values.general).envVariables) }}
+          {{- range $key, $value := (.Values.general).envVariables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if or (.Values.databaseConnection).instance (.Values.databaseConnection).database  }}
+            - name: {{ template "db-env-var-key" . }}_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.databaseConnection.instance }}{{ template "app-environment-suffix" .}}-{{ template "secret-ref-key" . }}-private-connection
+                  key: host
+            - name: {{ template "db-env-var-key" . }}_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.databaseConnection.instance }}{{ template "app-environment-suffix" .}}-{{ template "secret-ref-key" . }}-private-connection
+                  key: port
+            - name: {{ template "db-env-var-key" . }}_DATABASE
+              value: {{ .Values.databaseConnection.database }}
+            - name: {{ template "db-env-var-key" . }}_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.databaseConnection.instance }}{{ template "app-environment-suffix" .}}-{{ template "secret-ref-key" . }}-default-credentials
+                  key: username
+            - name: {{ template "db-env-var-key" . }}_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.databaseConnection.instance }}{{ template "app-environment-suffix" .}}-{{ template "secret-ref-key" . }}-default-credentials
+                  key: password
+          {{- end }}
+          {{- if or ((.Values.scaling).resources).memory ((.Values.scaling).resources).cpu }}
+          resources:
+            {{- if ((.Values.scaling).resources).memory }}
+            limits:
+              memory: {{ ((.Values.scaling).resources).memory }}Gi
+            {{- end }}
+            {{- if or ((.Values.scaling).resources).memory ((.Values.scaling).resources).cpu }}
+            requests:
+              {{- if ((.Values.scaling).resources).cpu }}
+              cpu: {{ ((.Values.scaling).resources).cpu }}
+              {{- end }}
+              {{- if ((.Values.scaling).resources).memory }}
+              memory: {{ ((.Values.scaling).resources).memory }}Gi
+              {{- end }}
+            {{- end }}
+          {{- end }}
