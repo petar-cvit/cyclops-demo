@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   engine: mysql
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
   version: '8'
   numNodes: 1
   region: {{ .Values.region }}
