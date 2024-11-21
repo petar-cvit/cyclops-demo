@@ -8,6 +8,6 @@ scaling:
   replicas: 1
 
 networking:
-  expose: true
+  expose: false
   port: 80
   type: ClusterIP
