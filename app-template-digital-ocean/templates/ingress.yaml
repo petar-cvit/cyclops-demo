@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+spec:
+  rules:
+  - host: {{ .Release.Name }}{{ template "app-environment-suffix" .}}.cyclops-ui.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
+            port:
+              number: 80
