@@ -19,7 +19,7 @@ metadata:
   name: digital-ocean-mysql
   namespace: cyclops
 spec:
-  path: digital-ocean-database
+  path: digital-ocean-database-mysql
   repo: https://github.com/petar-cvit/cyclops-demo
   sourceType: git
   version: fusepress-demo
