@@ -10,7 +10,8 @@
         "qa",
         "staging",
         "production"
-      ]
+      ],
+      "immutable": true
     },
     "region": {
       "title": "Region",
@@ -20,7 +21,8 @@
         "fra1",
         "nyc1",
         "syd1"
-      ]
+      ],
+      "immutable": true
     },
     "size": {
       "title": "Instance size",
