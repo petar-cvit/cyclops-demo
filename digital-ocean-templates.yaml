@@ -36,3 +36,16 @@ spec:
   repo: https://github.com/petar-cvit/cyclops-demo
   sourceType: git
   version: fusepress-demo
+---
+apiVersion: cyclops-ui.com/v1alpha1
+kind: TemplateStore
+metadata:
+  annotations:
+    cyclops-ui.com/icon: https://avatars.githubusercontent.com/u/1529926?s=200&v=4
+  name: digital-ocean-redis
+  namespace: cyclops
+spec:
+  path: digital-ocean-database-redis
+  repo: https://github.com/petar-cvit/cyclops-demo
+  sourceType: git
+  version: fusepress-demo
