@@ -122,7 +122,8 @@
           "type": "string",
           "enum": [
             "MySQL",
-            "PostgreSQL"
+            "PostgreSQL",
+            "Redis"
           ]
         },
         "instance": {

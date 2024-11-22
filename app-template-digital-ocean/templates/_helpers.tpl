@@ -3,6 +3,8 @@
 MYSQL
 {{- else if eq (.Values.databaseConnection).engineType "PostgreSQL" -}}
 POSTGRESQL
+{{- else if eq (.Values.databaseConnection).engineType "Redis" -}}
+REDIS
 {{- end -}}
 {{- end -}}
 
@@ -11,6 +13,8 @@ POSTGRESQL
 mysql
 {{- else if eq (.Values.databaseConnection).engineType "PostgreSQL" -}}
 pg
+{{- else if eq (.Values.databaseConnection).engineType "Redis" -}}
+redis
 {{- end -}}
 {{- end -}}
 
