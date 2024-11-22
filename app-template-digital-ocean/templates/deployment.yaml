@@ -42,7 +42,7 @@ spec:
                   name: {{ .Values.databaseConnection.instance }}{{ template "app-environment-suffix" .}}-{{ template "secret-ref-key" . }}-private-connection
                   key: port
             - name: {{ template "db-env-var-key" . }}_DATABASE
-              value: {{ .Values.databaseConnection.database }}
+              value: {{ .Values.databaseConnection.database | quote }}
             - name: {{ template "db-env-var-key" . }}_USER
               valueFrom:
                 secretKeyRef:
