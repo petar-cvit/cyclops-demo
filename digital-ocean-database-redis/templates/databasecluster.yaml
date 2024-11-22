@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}-redis
   namespace: {{ .Release.Namespace }}
 spec:
-  engine: pg
+  engine: redis
   name: {{ .Release.Name }}{{ template "app-environment-suffix" .}}
   version: '7'
   numNodes: 1
